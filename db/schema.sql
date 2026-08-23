@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS prayers;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -5,4 +6,10 @@ CREATE TABLE users (
    name TEXT NOT NULL,
    username VARCHAR(15) UNIQUE NOT NULL,
    password VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE prayers (
+   id SERIAL PRIMARY KEY,
+   users_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+   prayer TEXT NOT NULL
 );
