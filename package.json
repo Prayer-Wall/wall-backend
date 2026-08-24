@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:schema": "psql -d prayer_wall -f db/schema.sql"
+    "db:schema": "psql -d prayer_wall -f db/schema.sql",
+    "db:connect": "node --env-file=.env db/client.js"
   },
   "keywords": [],
   "author": "",
