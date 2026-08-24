@@ -8,6 +8,5 @@ export const createPrayer = async (userID, prayer) => {
    `;
 
    const { rows: [prayerId]} = await db.query(sql, [userID, prayer]);
-   console.log("New ID: ", prayerId);
    return prayerId;
 }
