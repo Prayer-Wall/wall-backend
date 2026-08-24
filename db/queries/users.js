@@ -6,11 +6,10 @@ export const createUser = async ({ name, username, password }) => {
   const sql = `
       INSERT INTO users (name, username, password)
       VALUES ($1, $2, $3)
-      RETURNING id, username
+      RETURNING username
    `;
 
   const { rows: [user] } = await db.query(sql, [name, username, securePassword]);
-  console.log(user);
   return user;
 };
 
