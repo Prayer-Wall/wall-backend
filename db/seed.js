@@ -6,7 +6,7 @@ const seed = async () => {
    for (let i = 1; i <=5; i++) {
       const newUser = {
          name: `Testy${i}`,
-         username: `Test${i}`,
+         username: `test${i}`,
          password: `password`
       }
       await createUser(newUser);

@@ -6,12 +6,22 @@ export default userRouter;
 
 userRouter.use(express.json());
 
+// username case handling middleware
+userRouter.use((req, res, next) => {
+   if (req.body.username) {
+      req.body.username = req.body.username.toLowerCase();
+      next()
+   } else {
+      next()
+   }
+})
+
 userRouter.post('/register', async (req, res, next) => {
    try {
       const {name, username, password} = req.body;
-   
+
       if (!name || !username || !password) return res.status(400).send("Body must include all fields or registration form");
-      await usernameExists(req.body.username);
+      await usernameExists(username);
       const token = await createUser(req.body);
       res.status(201).send(token);
    } catch (e) {
