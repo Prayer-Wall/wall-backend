@@ -22,7 +22,6 @@ export const usernameExists = async (username) => {
   `;
 
   const {rows: [isUser]} = await db.query(sql, [username]);
-  console.log (isUser);
   return isUser;
 }
 

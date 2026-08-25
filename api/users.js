@@ -11,7 +11,6 @@ userRouter.post('/register', async(req, res, next) => {
 
    if (!name || !username || !password) return res.status(400).send("Body must include all fields or registration form");
    const isUser = await usernameExists(req.body.username);
-   console.log("Server Side isUser: ", isUser)
    if (isUser) {
       res.status(400).send("Username unavailable")
    }
