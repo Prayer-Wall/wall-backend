@@ -15,6 +15,17 @@ export const createUser = async ({ name, username, password }) => {
   return token;
 };
 
+export const usernameExists = async (username) => {
+  const sql = `
+    SELECT * FROM users
+    WHERE users.username = $1
+  `;
+
+  const {rows: [isUser]} = await db.query(sql, [username]);
+  console.log (isUser);
+  return isUser;
+}
+
 export const authenticateUser = async ({username, password}) => {
   const sql = `
     SELECT * FROM users
