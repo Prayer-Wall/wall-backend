@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "nodemon --env-file=.env server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:schema": "psql -d prayer_wall -f db/schema.sql",
     "db:seed": "node --env-file=.env db/seed.js",
