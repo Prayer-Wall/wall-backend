@@ -18,6 +18,5 @@ export const getWallPrayers = async (userId) => {
    `;
 
    const {rows: prayers} = await db.query(sql, [userId]);
-   console.log(prayers)
    return prayers;
 }
