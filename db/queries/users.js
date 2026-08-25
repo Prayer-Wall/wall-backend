@@ -22,7 +22,8 @@ export const usernameExists = async (username) => {
   `;
 
   const {rows: [isUser]} = await db.query(sql, [username]);
-  return isUser;
+  if (isUser) throw new Error("Username unavailable");
+  return
 }
 
 export const authenticateUser = async ({username, password}) => {
