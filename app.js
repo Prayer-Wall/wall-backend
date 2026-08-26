@@ -4,8 +4,8 @@ import prayerRouter from "./api/prayers.js";
 const app = express();
 export default app;
 
-app.use('/users', userRouter);
-app.use('/prayers', prayerRouter);
+app.use('/api/users', userRouter);
+app.use('/api/prayers', prayerRouter);
 
 app.use((err, req, res, next) => {
    console.log(err.message);
