@@ -23,7 +23,7 @@ userRouter.post('/register', async (req, res, next) => {
       if (!name || !username || !password) return res.status(400).send("Body must include all fields or registration form");
       await usernameExists(username);
       const token = await createUser(req.body);
-      res.status(201).send(token);
+      res.status(201).send({token});
    } catch (e) {
       res.status(400).send(e.message)
    }
