@@ -20,12 +20,12 @@ userRouter.post('/register', async (req, res, next) => {
    try {
       const {name, username, password} = req.body;
 
-      if (!name || !username || !password) return res.status(400).send("Body must include all fields or registration form");
+      if (!name || !username || !password) return res.status(400).json({message: "Body must include all fields on registration form"});
       await usernameExists(username);
       const token = await createUser(req.body);
       res.status(201).send({token});
    } catch (e) {
-      res.status(400).send(e.message)
+      res.status(400).json({message: e.message});
    }
 
 });
@@ -34,10 +34,11 @@ userRouter.post(`/login`, async (req, res, next) => {
    try {
       const {username, password} = req.body;
       
-      if (!username || !password) return res.status(400).send("Body must include all fields or registration form");
+      if (!username || !password) return res.status(400).json({message: "Body must include all fields on form"});
       const token = await authenticateUser(req.body);
-      res.send(token);
+      res.send({token});
    } catch (e) {
-      res.status(401).send(e.message);
+      console.log(e.message)
+      res.status(401).json({message: e.message});
    }
 })
