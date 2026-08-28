@@ -14,7 +14,6 @@ prayerRouter.use(async (req, res, next) => {
    const token = authorization.split(" ")[1];
    try {
       const userId = await getUserIdByToken(token);
-      console.log("Middleware ", userId)
       req.userId = userId;
       next();
    } catch (e) {
