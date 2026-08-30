@@ -32,13 +32,13 @@ prayerRouter.get('/', async (req, res, next) => {
    }
 });
 
-prayerRouter.post('/', async (req,res,next) => {
+prayerRouter.post('/add', async (req,res,next) => {``
    const {prayer} = req.body;
 
    if (!prayer) return res.status(400).json({message: "Must include prayer in body"});
    try {
       await createPrayer(req.userId, prayer);
-      res.status(201).send("Prayer added successfully!")
+      res.status(201).json({message: "Prayer added successfully!"})
    } catch (e) {
       console.log(e)
       next()
