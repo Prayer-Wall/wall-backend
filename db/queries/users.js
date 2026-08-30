@@ -11,7 +11,7 @@ export const createUser = async ({ name, username, password }) => {
    `;
 
   const { rows: [user] } = await db.query(sql, [name, username, securePassword]);
-  const token = jwt.sign({user}, process.env.JWT_SECRET);
+  const token = jwt.sign({username: user.username}, process.env.JWT_SECRET);
   return token;
 };
 
