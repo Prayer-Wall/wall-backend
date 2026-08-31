@@ -1,6 +1,6 @@
 import express from "express";
 import { getUserIdByToken } from "../db/queries/users.js";
-import { createPrayer, editPrayerById, getUserIdByPrayerId, getWallPrayers } from "../db/queries/prayers.js";
+import { createPrayer, deletePrayerById, editPrayerById, getUserIdByPrayerId, getWallPrayers } from "../db/queries/prayers.js";
 
 const prayerRouter = express.Router();
 export default prayerRouter 
@@ -20,7 +20,7 @@ prayerRouter.use(async (req, res, next) => {
       console.log(e)
       res.status(401).json({message: "Invalid token"})
    }
-})
+});
 
 prayerRouter.get('/', async (req, res, next) => {
    try {
@@ -43,7 +43,7 @@ prayerRouter.post('/add', async (req,res,next) => {``
       console.log(e)
       next()
    }
-})
+});
 
 prayerRouter.put('/edit', async(req, res, next) => {
    const {id, prayer} = req.body;
@@ -56,6 +56,23 @@ prayerRouter.put('/edit', async(req, res, next) => {
       }
       await editPrayerById(id, prayer);
       res.status(200).json({message: "Prayer upated successfully!"});
+   } catch (e) {
+      console.log(e)
+      next()
+   }
+});
+
+prayerRouter.delete('/delete', async(req, res, next) => {
+   const {id} = req.body;
+
+   if (!id) return res.status(400).json({message: "Must include id in body"});
+   try {
+      const prayersUser = await getUserIdByPrayerId(id);
+      if (req.userId !== prayersUser) {
+         throw new Error("You are not authorized to update this prayer!");
+      }
+      await deletePrayerById(id);
+      res.status(200).json({message: "Prayer deleted successfully!"});
    } catch (e) {
       console.log(e)
       next()
