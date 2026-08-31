@@ -1,6 +1,6 @@
 import express from "express";
 import { getUserIdByToken } from "../db/queries/users.js";
-import { createPrayer, getWallPrayers } from "../db/queries/prayers.js";
+import { createPrayer, editPrayerById, getWallPrayers } from "../db/queries/prayers.js";
 
 const prayerRouter = express.Router();
 export default prayerRouter 
@@ -39,6 +39,19 @@ prayerRouter.post('/add', async (req,res,next) => {``
    try {
       await createPrayer(req.userId, prayer);
       res.status(201).json({message: "Prayer added successfully!"})
+   } catch (e) {
+      console.log(e)
+      next()
+   }
+})
+
+prayerRouter.put('/edit', async(req, res, next) => {
+   const {id, prayer} = req.body;
+   
+   if (!prayer || !id) return res.status(400).json({message: "Must include prayer and id in body"});
+   try {
+      await editPrayerById(id, prayer);
+      res.status(200).json({message: "Prayer upated successfully!"});
    } catch (e) {
       console.log(e)
       next()

@@ -20,3 +20,18 @@ export const getWallPrayers = async (userId) => {
    const {rows: prayers} = await db.query(sql, [userId]);
    return prayers;
 }
+
+export const editPrayerById = async(id, prayer) => {
+   const sql = `
+      UPDATE prayers SET prayer = $1 WHERE prayers.id = $2
+      RETURNING prayers.prayer
+   `;
+
+   const {rows: [newPrayer]} = await db.query(sql, [prayer, id]);
+   console.log(newPrayer)
+   return newPrayer
+}
+
+export const deletePrayerById = async(id) => {
+
+}
