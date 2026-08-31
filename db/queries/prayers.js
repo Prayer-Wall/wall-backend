@@ -15,6 +15,7 @@ export const getWallPrayers = async (userId) => {
    const sql = `
       SELECT id, prayer FROM prayers
       WHERE prayers.user_id = $1
+      ORDER BY id
    `;
 
    const {rows: prayers} = await db.query(sql, [userId]);
