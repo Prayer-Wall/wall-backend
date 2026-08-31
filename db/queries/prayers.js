@@ -21,6 +21,16 @@ export const getWallPrayers = async (userId) => {
    return prayers;
 }
 
+export const getPrayerById = async (id) => {
+   const sql = `
+      SELECT prayer FROM prayers
+      WHERE prayers.id = $1
+   `
+
+   const {rows: [prayer]} = await db.query(sql, [id]);
+   return prayer;
+}
+
 export const editPrayerById = async(id, prayer) => {
    const sql = `
       UPDATE prayers SET prayer = $1 

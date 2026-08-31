@@ -1,6 +1,6 @@
 import express from "express";
 import { getUserIdByToken } from "../db/queries/users.js";
-import { createPrayer, deletePrayerById, editPrayerById, getUserIdByPrayerId, getWallPrayers } from "../db/queries/prayers.js";
+import { createPrayer, deletePrayerById, editPrayerById, getPrayerById, getUserIdByPrayerId, getWallPrayers } from "../db/queries/prayers.js";
 
 const prayerRouter = express.Router();
 export default prayerRouter 
@@ -32,6 +32,17 @@ prayerRouter.get('/', async (req, res, next) => {
    }
 });
 
+prayerRouter.get(`/:id`, async (req, res, next) => {
+   try {
+      const prayerId = req.params.id;
+      const prayer = await getPrayerById(prayerId);
+      res.status(200).send(prayer)
+   } catch (e) {
+      console.log(e);
+      next();
+   }
+})
+
 prayerRouter.post('/add', async (req,res,next) => {``
    const {prayer} = req.body;
 
@@ -45,8 +56,9 @@ prayerRouter.post('/add', async (req,res,next) => {``
    }
 });
 
-prayerRouter.put('/edit', async(req, res, next) => {
-   const {id, prayer} = req.body;
+prayerRouter.put('/:id', async(req, res, next) => {
+   const {id} = req.params
+   const {prayer} = req.body;
    
    if (!prayer || !id) return res.status(400).json({message: "Must include prayer and id in body"});
    try {
