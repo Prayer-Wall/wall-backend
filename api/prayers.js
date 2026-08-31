@@ -1,6 +1,6 @@
 import express from "express";
 import { getUserIdByToken } from "../db/queries/users.js";
-import { createPrayer, editPrayerById, getWallPrayers } from "../db/queries/prayers.js";
+import { createPrayer, editPrayerById, getUserIdByPrayerId, getWallPrayers } from "../db/queries/prayers.js";
 
 const prayerRouter = express.Router();
 export default prayerRouter 
@@ -50,6 +50,10 @@ prayerRouter.put('/edit', async(req, res, next) => {
    
    if (!prayer || !id) return res.status(400).json({message: "Must include prayer and id in body"});
    try {
+      const prayersUser = await getUserIdByPrayerId(id);
+      if (req.userId !== prayersUser) {
+         throw new Error("You are not authorized to update this prayer!");
+      }
       await editPrayerById(id, prayer);
       res.status(200).json({message: "Prayer upated successfully!"});
    } catch (e) {

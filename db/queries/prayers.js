@@ -28,8 +28,17 @@ export const editPrayerById = async(id, prayer) => {
    `;
 
    const {rows: [newPrayer]} = await db.query(sql, [prayer, id]);
-   console.log(newPrayer)
    return newPrayer
+}
+
+export const getUserIdByPrayerId = async(id) => {
+   const sql = `
+      SELECT user_id FROM prayers
+      WHERE prayers.id = $1
+   `;
+
+   const {rows: [prayer]} = await db.query(sql, [id]);
+   return prayer.user_id;
 }
 
 export const deletePrayerById = async(id) => {
