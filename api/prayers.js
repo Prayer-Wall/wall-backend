@@ -57,7 +57,7 @@ prayerRouter.post('/add', async (req,res,next) => {``
 });
 
 prayerRouter.put('/:id', async(req, res, next) => {
-   const {id} = req.params
+   const {id} = req.params;
    const {prayer} = req.body;
    
    if (!prayer || !id) return res.status(400).json({message: "Must include prayer and id in body"});
@@ -74,8 +74,8 @@ prayerRouter.put('/:id', async(req, res, next) => {
    }
 });
 
-prayerRouter.delete('/delete', async(req, res, next) => {
-   const {id} = req.body;
+prayerRouter.delete('/:id', async(req, res, next) => {
+   const {id} = req.params;
 
    if (!id) return res.status(400).json({message: "Must include id in body"});
    try {
