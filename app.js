@@ -8,7 +8,7 @@ export default app;
 
 app.use(cors({ origin: "http://localhost:5173" }));
 
-app.use("api/images", express.static("db/images"));
+app.use("/api/images", express.static("db/images"));
 app.use("/api/users", userRouter);
 app.use("/api/prayers", prayerRouter);
 
