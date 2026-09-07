@@ -1,6 +1,9 @@
 import express from "express";
+import multer from "multer";
 import { getUserIdByToken } from "../db/queries/users.js";
 import { createPrayer, deletePrayerById, editPrayerById, getPrayerById, getUserIdByPrayerId, getWallPrayers } from "../db/queries/prayers.js";
+
+const images = multer({dest: 'db/images/'})
 
 const prayerRouter = express.Router();
 export default prayerRouter 
@@ -43,12 +46,13 @@ prayerRouter.get(`/:id`, async (req, res, next) => {
    }
 })
 
-prayerRouter.post('/add', async (req,res,next) => {``
+prayerRouter.post('/add', images.single('img'), async (req,res,next) => {
    const {prayer} = req.body;
+   const imagePath = req.file?.filename
 
    if (!prayer) return res.status(400).json({message: "Must include prayer in body"});
    try {
-      await createPrayer(req.userId, prayer);
+      await createPrayer(req.userId, imagePath, prayer);
       res.status(201).json({message: "Prayer added successfully!"})
    } catch (e) {
       console.log(e)
