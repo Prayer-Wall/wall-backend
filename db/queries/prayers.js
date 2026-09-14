@@ -49,6 +49,19 @@ export const editPrayerById = async (id, imagePath, prayer) => {
   return newPrayer;
 };
 
+export const getPrayerImageById = async (id) => {
+  const sql = `
+    SELECT image FROM prayers
+    WHERE prayers.id = $1
+  `;
+
+  const {
+    rows: [image],
+  } = await db.query(sql, [id]);
+  const imagePath = image.image;
+  return imagePath;
+};
+
 export const getUserIdByPrayerId = async (id) => {
   const sql = `
       SELECT user_id FROM prayers
