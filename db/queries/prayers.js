@@ -36,16 +36,16 @@ export const getPrayerById = async (id) => {
   return prayer;
 };
 
-export const editPrayerById = async (id, prayer) => {
+export const editPrayerById = async (id, imagePath, prayer) => {
   const sql = `
-      UPDATE prayers SET prayer = $1 
-      WHERE prayers.id = $2
+      UPDATE prayers SET prayer = $1, image = $2 
+      WHERE prayers.id = $3
       RETURNING prayers.prayer
    `;
 
   const {
     rows: [newPrayer],
-  } = await db.query(sql, [prayer, id]);
+  } = await db.query(sql, [prayer, imagePath, id]);
   return newPrayer;
 };
 

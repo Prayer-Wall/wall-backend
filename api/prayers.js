@@ -60,9 +60,10 @@ prayerRouter.post('/add', images.single('img'), async (req,res,next) => {
    }
 });
 
-prayerRouter.put('/:id', async(req, res, next) => {
+prayerRouter.put('/:id', images.single('img'), async(req, res, next) => {
    const {id} = req.params;
    const {prayer} = req.body;
+   const imagePath = req.file?.filename
    
    if (!prayer || !id) return res.status(400).json({message: "Must include prayer and id in body"});
    try {
@@ -70,7 +71,7 @@ prayerRouter.put('/:id', async(req, res, next) => {
       if (req.userId !== prayersUser) {
          throw new Error("You are not authorized to update this prayer!");
       }
-      await editPrayerById(id, prayer);
+      await editPrayerById(id, imagePath, prayer);
       res.status(200).json({message: "Prayer upated successfully!"});
    } catch (e) {
       console.log(e)
