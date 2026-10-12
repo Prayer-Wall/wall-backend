@@ -11,5 +11,6 @@ CREATE TABLE users (
 CREATE TABLE prayers (
    id SERIAL PRIMARY KEY,
    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+   image TEXT UNIQUE,
    prayer TEXT NOT NULL
 );

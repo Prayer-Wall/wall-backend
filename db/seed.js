@@ -13,9 +13,9 @@ const seed = async () => {
    }
 
    for (let i = 0; i < 9; i++) {
-      await createPrayer(2, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, architecto nulla? Officiis totam dignissimos enim reprehenderit tempore. Iure amet, totam fugit delectus commodi eligendi laboriosam numquam quas rem nesciunt consectetur.")
+      await createPrayer(2, "", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, architecto nulla? Officiis totam dignissimos enim reprehenderit tempore. Iure amet, totam fugit delectus commodi eligendi laboriosam numquam quas rem nesciunt consectetur.")
    }
-   await createPrayer(4, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, architecto nulla? Officiis totam dignissimos enim reprehenderit tempore. Iure amet, totam fugit delectus commodi eligendi laboriosam numquam quas rem nesciunt consectetur.")
+   await createPrayer(4, "", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, architecto nulla? Officiis totam dignissimos enim reprehenderit tempore. Iure amet, totam fugit delectus commodi eligendi laboriosam numquam quas rem nesciunt consectetur.")
 }
 
 await db.connect();
