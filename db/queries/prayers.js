@@ -26,7 +26,7 @@ export const getWallPrayers = async (userId) => {
 
 export const getPrayerById = async (id) => {
   const sql = `
-      SELECT prayer FROM prayers
+      SELECT * FROM prayers
       WHERE prayers.id = $1
    `;
 

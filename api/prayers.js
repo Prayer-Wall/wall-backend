@@ -1,5 +1,7 @@
 import express from "express";
 import multer from "multer";
+import {unlink} from "node:fs/promises"
+import path from "node:path"
 import { getUserIdByToken } from "../db/queries/users.js";
 import {
   createPrayer,
@@ -98,10 +100,12 @@ prayerRouter.delete("/:id", async (req, res, next) => {
   if (!id) return res.status(400).json({ message: "Must include id in body" });
   try {
     const prayersUser = await getUserIdByPrayerId(id);
+    const imagePath = await getPrayerImageById(id);
     if (req.userId !== prayersUser) {
       throw new Error("You are not authorized to update this prayer!");
     }
     await deletePrayerById(id);
+    if (imagePath) await unlink(path.join("db/images", imagePath))
     res.status(200).json({ message: "Prayer deleted successfully!" });
   } catch (e) {
     console.log(e);
